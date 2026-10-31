@@ -7,7 +7,7 @@ import { projectDir, readPackageVersion, remove, run, tempDir } from './helpers.
 it('should pack, install, and run the published library', { timeout: 180_000 }, async ({ expect }) => {
   const dir = projectDir('typescript-library');
   const version = readPackageVersion(dir);
-  const tarball = join(dir, `jonathanmorley-typescript-library-${version}.tgz`);
+  const tarball = join(dir, `continuous-release-typescript-library-${version}.tgz`);
   const installDir = tempDir('release-smoke-lib');
   try {
     if (existsSync(tarball)) rmSync(tarball);
@@ -29,7 +29,7 @@ it('should pack, install, and run the published library', { timeout: 180_000 }, 
     const installed = join(
       installDir,
       'node_modules',
-      '@jonathanmorley',
+      '@continuous-release',
       'typescript-library',
       'dist',
       'src',

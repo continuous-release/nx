@@ -1,5 +1,5 @@
 {
-  "name": "@jonathanmorley/release-smoke",
+  "name": "@continuous-release/release-smoke",
   "version": "0.0.0",
   "private": true,
   "type": "module",

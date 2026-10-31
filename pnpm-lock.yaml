@@ -39,7 +39,7 @@ importers:
 
   packages/typescript-application:
     dependencies:
-      '@jonathanmorley/typescript-library':
+      '@continuous-release/typescript-library':
         specifier: workspace:*
         version: link:../typescript-library
 

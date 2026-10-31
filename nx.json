@@ -79,17 +79,16 @@
     "root": ["{workspaceRoot}/.github/workflows/*", "{workspaceRoot}/mise.toml"]
   },
   "release": {
-    "projects": ["@jonathanmorley/typescript-library", "@jonathanmorley/typescript-application"],
-    "projectsRelationship": "independent",
+    "projects": ["@continuous-release/typescript-library", "@continuous-release/typescript-application"],
+    "projectsRelationship": "fixed",
     "releaseTag": {
-      "pattern": "{projectName}@{version}"
+      "pattern": "v{version}"
     },
     "version": {
       "conventionalCommits": false,
       "git": {
-        "commit": true,
-        "commitMessage": "chore(release): publish {projectName} {version}",
-        "tag": true,
+        "commit": false,
+        "tag": false,
         "push": false
       }
     },

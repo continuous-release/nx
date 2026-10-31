@@ -11,5 +11,5 @@ Authentication is split by capability. Git, release, and Actions API calls use O
 Danger: creates real releases and packages in `gh-testbed`. Requires `GH_TOKEN` with classic scopes `repo`, `write:packages`, `delete:packages` (any PAT covering both roles works locally, so `PACKAGES_TOKEN` may point at the same token):
 
 ```bash
-GH_TOKEN="$(gh auth token)" PACKAGES_TOKEN="$(gh auth token)" pnpm nx run @jonathanmorley/release-e2e:live-e2e
+GH_TOKEN="$(gh auth token)" PACKAGES_TOKEN="$(gh auth token)" pnpm nx run @continuous-release/release-e2e:live-e2e
 ```

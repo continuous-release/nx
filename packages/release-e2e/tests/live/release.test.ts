@@ -143,7 +143,7 @@ async function expectReleaseRunGreen(tag: string): Promise<void> {
 async function pollRegistry(version: string, installDir: string): Promise<void> {
   writeFileSync(
     join(installDir, '.npmrc'),
-    `@jonathanmorley:registry=https://npm.pkg.github.com\n//npm.pkg.github.com/:_authToken=${packagesToken()}\n`
+    `@continuous-release:registry=https://npm.pkg.github.com\n//npm.pkg.github.com/:_authToken=${packagesToken()}\n`
   );
   // Dedicated loop instead of poll() so the timeout error carries the last
   // npm failure (401 vs 404 distinguishes auth from visibility problems).

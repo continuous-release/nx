@@ -1,6 +1,6 @@
 {
-  "name": "@jonathanmorley/typescript-application",
-  "version": "1.0.0",
+  "name": "@continuous-release/typescript-application",
+  "version": "0.1.0",
   "module": "dist/index.js",
   "files": [
     "dist/src"
@@ -9,7 +9,7 @@
     "registry": "https://npm.pkg.github.com"
   },
   "dependencies": {
-    "@jonathanmorley/typescript-library": "workspace:*"
+    "@continuous-release/typescript-library": "workspace:*"
   },
   "nx": {
     "targets": {

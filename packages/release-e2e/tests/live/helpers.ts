@@ -4,10 +4,10 @@ import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-export const OWNER = 'jonathanmorley';
+export const OWNER = 'continuous-release';
 export const TESTBED = 'gh-testbed';
-export const LIB = '@jonathanmorley/typescript-library';
-export const APP = '@jonathanmorley/typescript-application';
+export const LIB = '@continuous-release/typescript-library';
+export const APP = '@continuous-release/typescript-application';
 
 export const workspaceRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..', '..', '..');
 

@@ -1,6 +1,6 @@
 {
-  "name": "@jonathanmorley/typescript-library",
-  "version": "1.0.0",
+  "name": "@continuous-release/typescript-library",
+  "version": "0.1.0",
   "type": "module",
   "main": "dist/src/index.js",
   "files": [

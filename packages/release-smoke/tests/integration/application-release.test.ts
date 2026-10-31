@@ -3,20 +3,20 @@ import { join } from 'node:path';
 import { it } from 'vitest';
 import { projectDir, readPackageVersion, remove, run, tempDir } from './helpers.js';
 
-const LIB = '@jonathanmorley/typescript-library';
+const LIB = '@continuous-release/typescript-library';
 
 it('should pack, install, and run the published application', { timeout: 240_000 }, ({ expect }) => {
   const libDir = projectDir('typescript-library');
   const appDir = projectDir('typescript-application');
   const appVersion = readPackageVersion(appDir);
-  const appTarball = join(appDir, `jonathanmorley-typescript-application-${appVersion}.tgz`);
+  const appTarball = join(appDir, `continuous-release-typescript-application-${appVersion}.tgz`);
   const unpackDir = tempDir('release-smoke-app-unpack');
   const installDir = tempDir('release-smoke-app');
   // Pack the library into the unique unpack dir because the library test
   // packs the same tarball name in place, and test files run in parallel
   // workers. Only this file writes the application tarball, so packing it
   // in place is safe.
-  const stagedLibTarball = join(unpackDir, `jonathanmorley-typescript-library-${readPackageVersion(libDir)}.tgz`);
+  const stagedLibTarball = join(unpackDir, `continuous-release-typescript-library-${readPackageVersion(libDir)}.tgz`);
   try {
     if (existsSync(appTarball)) rmSync(appTarball);
     run('pnpm', ['pack', '--pack-destination', unpackDir], libDir);
@@ -39,7 +39,7 @@ it('should pack, install, and run the published application', { timeout: 240_000
     manifest.dependencies[LIB] = `file:${stagedLibTarball}`;
     writeFileSync(manifestPath, JSON.stringify(manifest, undefined, 2));
     run('pnpm', ['pack'], join(unpackDir, 'package'));
-    const fixedTarball = join(unpackDir, 'package', `jonathanmorley-typescript-application-${appVersion}.tgz`);
+    const fixedTarball = join(unpackDir, 'package', `continuous-release-typescript-application-${appVersion}.tgz`);
     expect(existsSync(fixedTarball)).toBe(true);
 
     writeFileSync(
@@ -51,7 +51,7 @@ it('should pack, install, and run the published application', { timeout: 240_000
     const entrypoint = join(
       installDir,
       'node_modules',
-      '@jonathanmorley',
+      '@continuous-release',
       'typescript-application',
       'dist',
       'src',

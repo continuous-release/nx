@@ -32,20 +32,38 @@ pnpm nx affected --target=integration-test
 
 ## Release (maintainers)
 
-Versions are independent per package. The flow is split: `nx release` versions locally, `release.yaml` publishes on tag push.
+Releases are automatic. Every push to `main` runs `release.yml`, which calls
+the shared
+[`auto-release.yml`](https://github.com/continuous-release/.github/blob/main/.github/workflows/auto-release.yml)
+with `system: nx`:
 
-```bash
-mise x -- pnpm nx release version patch --projects=@jonathanmorley/typescript-library
-git push origin main '@jonathanmorley/typescript-library@*'
-```
+1. compute the next version from conventional commits since the last `v*` tag;
+2. run `nx release version <version>` (fixed group, both packages);
+3. build and publish both packages to GitHub Packages;
+4. tag `v<version>` and create a GitHub Release with the tarballs.
 
-`nx release version` bumps the manifest, updates the lockfile, writes the changelog, and commits + tags (no push — see the `release` block in `nx.json`). Bumping the library also bumps the application, since it depends on the library. Pushing a `{projectName}@{version}` tag triggers `release.yaml`, which builds, publishes to GitHub Packages, and creates a GitHub Release with the packed tarball, an SPDX SBOM, and SLSA attestation. Republish of an existing version fails by design; cut a new version instead.
+Do not version locally and do not push tags. Use a `Release-As: X.Y.Z` footer
+on the head commit to force a version. Nothing is committed back to `main`;
+the tag is the source of truth.
 
-Validate without mutating anything via `workflow_dispatch` with `dry_run: true` on an existing tag.
+The shared workflow is the only place that knows the version rules and the
+release notes format. If you need to change them, change them there, not in
+this repo.
 
 ## Live E2E authentication
 
-`e2e-release.yaml` (dispatch + weekly schedule, never on PRs) runs the `release-e2e` suite, which releases from namespaced `it-*` refs in the `gh-testbed` repo, publishes `0.0.0-e2e.*` package versions, and deletes everything afterwards. Authentication uses Octo STS, not a stored PAT: the job mints a short-lived token scoped to the testbed repo (trust policy at `gh-testbed/.github/chainguard/gha-testing-e2e.sts.yaml`, same pattern as `fork-maintainer`'s E2E). One exception: package registry reads and version deletions go through the `TESTBED_PACKAGES_TOKEN` secret (classic PAT, `read:packages` + `write:packages` + `delete:packages`), because those endpoints only honor PATs. Local runs need `GH_TOKEN` with classic `repo`, `write:packages`, and `delete:packages` scopes instead, since there is no OIDC outside Actions.
+`e2e-release.yaml` is paused after the move to `continuous-release`. It runs
+the `release-e2e` suite, which releases from namespaced `it-*` refs in the
+`gh-testbed` repo, publishes `0.0.0-e2e.*` package versions, and deletes
+everything afterwards. Authentication uses Octo STS: the job mints a
+short-lived token scoped to the testbed repo (trust policy at
+`gh-testbed/.github/chainguard/gha-testing-e2e.sts.yaml`).
+
+To re-enable it, move `gh-testbed` to `continuous-release`, update the trust
+policy to allow `continuous-release/nx`, and restore the schedule. Package
+registry reads and version deletions still use the `TESTBED_PACKAGES_TOKEN`
+secret (classic PAT, `read:packages` + `write:packages` + `delete:packages`),
+because those endpoints only honor PATs.
 
 ## Pull requests
 

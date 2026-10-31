@@ -1,5 +1,5 @@
 {
-  "name": "@jonathanmorley/release-e2e",
+  "name": "@continuous-release/release-e2e",
   "version": "0.0.0",
   "private": true,
   "type": "module",

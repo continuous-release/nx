@@ -1,11 +1,11 @@
 # typescript-application
 
-Runnable TypeScript app depending on `@jonathanmorley/typescript-library` (`workspace:*`). Prints `hello('World')`. Published to GitHub Packages alongside the library on every release (same install setup as the library).
+Runnable TypeScript app depending on `@continuous-release/typescript-library` (`workspace:*`). Prints `hello('World')`. Published to GitHub Packages alongside the library on every release (same install setup as the library).
 
 ## Run
 
 ```bash
-pnpm nx affected --target=build --projects=@jonathanmorley/typescript-application
+pnpm nx affected --target=build --projects=@continuous-release/typescript-application
 node packages/typescript-application/dist/src/index.js
 # Hello World!
 ```

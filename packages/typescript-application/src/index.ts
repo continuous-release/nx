@@ -1,3 +1,3 @@
-import { hello } from '@jonathanmorley/typescript-library';
+import { hello } from '@continuous-release/typescript-library';
 
 console.log(hello('World'));
